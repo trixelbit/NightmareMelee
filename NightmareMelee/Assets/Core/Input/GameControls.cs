@@ -95,7 +95,7 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""1d3af069-d0ee-497f-a28a-1b8b1a230e10"",
                     ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",

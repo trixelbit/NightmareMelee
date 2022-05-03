@@ -5,15 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Player : Character
 {
-    [SerializeField]
     public GameControls Controls;
-    public IEquipable _equipedWeapon { get; private set; }
-    protected Item[] _inventory;
+    public IEquipable EquipedWeapon { get; private set; }
+    public Item[] Inventory;
+    public GameObject WeaponPivot;
 
     private EPlayerState _state;
-
     private Vector2 _input;
     private bool _canSprint = false;
+
+    private GameObject g;
 
     protected override void Awake()
     {
@@ -21,12 +22,13 @@ public class Player : Character
         Controls = new GameControls();
         Controls.ActiveGame.Sprint.performed += delegate { _canSprint = true; };
         Controls.ActiveGame.Sprint.canceled += delegate { _canSprint = false; };
+        g = new GameObject();
     }
 
     protected override void Update()
     {
         SetPlayerState();
-
+        UpdateWeaponRotation();
         switch (_state)
         {
             case EPlayerState.Idle:
@@ -47,6 +49,7 @@ public class Player : Character
     private void SetPlayerState()
     {
         _input = Controls.ActiveGame.Movement.ReadValue<Vector2>();
+        _input.Normalize();
         if (_input.magnitude == 0)
         {
             _state = EPlayerState.Idle;
@@ -66,12 +69,27 @@ public class Player : Character
 
     protected override void Attack()
     {
-        if (_equipedWeapon == null)
+        if (EquipedWeapon == null)
         {
             return;        
         }
 
-        _equipedWeapon.Shoot();
+        EquipedWeapon.Shoot();
+    }
+
+    private void UpdateWeaponRotation()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000))
+        {
+            g.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            WeaponPivot.transform.LookAt(g.transform);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+
     }
 
     private enum EPlayerState 
