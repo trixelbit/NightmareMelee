@@ -33,6 +33,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""a82915ed-db84-4951-a27d-685611ba1bef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5010f85d-eb76-4285-b29c-c2bcc0ed819c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +130,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_ActiveGame = asset.FindActionMap("ActiveGame", throwIfNotFound: true);
         m_ActiveGame_Movement = m_ActiveGame.FindAction("Movement", throwIfNotFound: true);
         m_ActiveGame_Sprint = m_ActiveGame.FindAction("Sprint", throwIfNotFound: true);
+        m_ActiveGame_Shoot = m_ActiveGame.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +182,14 @@ public class @GameControls : IInputActionCollection, IDisposable
     private IActiveGameActions m_ActiveGameActionsCallbackInterface;
     private readonly InputAction m_ActiveGame_Movement;
     private readonly InputAction m_ActiveGame_Sprint;
+    private readonly InputAction m_ActiveGame_Shoot;
     public struct ActiveGameActions
     {
         private @GameControls m_Wrapper;
         public ActiveGameActions(@GameControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_ActiveGame_Movement;
         public InputAction @Sprint => m_Wrapper.m_ActiveGame_Sprint;
+        public InputAction @Shoot => m_Wrapper.m_ActiveGame_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_ActiveGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +205,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Sprint.started -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnSprint;
+                @Shoot.started -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_ActiveGameActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_ActiveGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +218,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -201,5 +229,6 @@ public class @GameControls : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

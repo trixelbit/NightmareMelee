@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 public class Player : Character
 {
     public GameControls Controls;
-    public IEquipable EquipedWeapon { get; private set; }
+
+    [HeaderAttribute("Weapon")]
+    public GameObject WeaponObject;
+    public IEquipable EquipedWeapon{ get; private set; }
     public Item[] Inventory;
     public GameObject WeaponPivot;
 
@@ -22,7 +25,10 @@ public class Player : Character
         Controls = new GameControls();
         Controls.ActiveGame.Sprint.performed += delegate { _canSprint = true; };
         Controls.ActiveGame.Sprint.canceled += delegate { _canSprint = false; };
+        Controls.ActiveGame.Shoot.performed += delegate { Attack(); };
         g = new GameObject();
+
+        EquipedWeapon = WeaponObject.GetComponent<Weapon>();
     }
 
     protected override void Update()
@@ -87,19 +93,6 @@ public class Player : Character
         }
     }
 
-    private void OnDrawGizmos()
-    {
-
-    }
-
-    private enum EPlayerState 
-    { 
-        Idle,
-        Walk,
-        Run,
-        Attack
-    }
-
     private void OnEnable()
     {
         Controls.Enable();
@@ -108,5 +101,12 @@ public class Player : Character
     private void OnDisable()
     {
         Controls.Disable();
+    }
+    private enum EPlayerState 
+    { 
+        Idle,
+        Walk,
+        Run,
+        Attack
     }
 }
