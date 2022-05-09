@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    [Header("Base Character Traits")]
     public float WalkSpeed;
     public float RunSpeed;
+    public float StopLerpPercent;
 
     protected Rigidbody _rigidbody;
 
@@ -17,6 +19,11 @@ public class Character : MonoBehaviour
     protected virtual void Update()
     {
 
+    }
+
+    protected virtual void Idle()
+    {
+        _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, Vector3.zero, StopLerpPercent);
     }
 
     protected virtual void Walk(Vector2 vector)

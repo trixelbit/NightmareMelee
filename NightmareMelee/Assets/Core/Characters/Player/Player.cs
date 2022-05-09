@@ -7,17 +7,18 @@ public class Player : Character
 {
     public GameControls Controls;
 
-    [HeaderAttribute("Weapon")]
+    [Header("Weapon")]
     public GameObject WeaponObject;
-    public IEquipable EquipedWeapon{ get; private set; }
-    public Item[] Inventory;
     public GameObject WeaponPivot;
+    public IEquipable EquipedWeapon{ get; private set; }
+
+    public Item[] Inventory;
 
     private EPlayerState _state;
     private Vector2 _input;
     private bool _canSprint = false;
 
-    private GameObject g;
+    private GameObject _raycastHitObject;
 
     protected override void Awake()
     {
@@ -26,7 +27,7 @@ public class Player : Character
         Controls.ActiveGame.Sprint.performed += delegate { _canSprint = true; };
         Controls.ActiveGame.Sprint.canceled += delegate { _canSprint = false; };
         Controls.ActiveGame.Shoot.performed += delegate { Attack(); };
-        g = new GameObject();
+        _raycastHitObject = new GameObject();
 
         EquipedWeapon = WeaponObject.GetComponent<Weapon>();
     }
@@ -38,6 +39,7 @@ public class Player : Character
         switch (_state)
         {
             case EPlayerState.Idle:
+                Idle();
                 break;
             case EPlayerState.Walk:
                 Walk(_input);
@@ -60,7 +62,7 @@ public class Player : Character
         {
             _state = EPlayerState.Idle;
         }
-        else
+        else if (_input.magnitude >= 0.9f)
         {
             if (_canSprint)
             {
@@ -70,6 +72,10 @@ public class Player : Character
             {
                 _state = EPlayerState.Walk;
             }
+        }
+        else
+        {
+            _state = EPlayerState.Idle;
         }
     }
 
@@ -88,8 +94,8 @@ public class Player : Character
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, 1000))
         {
-            g.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            WeaponPivot.transform.LookAt(g.transform);
+            _raycastHitObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            WeaponPivot.transform.LookAt(_raycastHitObject.transform);
         }
     }
 
