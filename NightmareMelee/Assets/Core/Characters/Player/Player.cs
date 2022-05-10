@@ -10,12 +10,16 @@ public class Player : Character
     [Header("Weapon")]
     public GameObject WeaponObject;
     public GameObject WeaponPivot;
+    public float RaycastOffset = 0.5f;
     public IEquipable EquipedWeapon{ get; private set; }
 
+    [Header("Inventory")]
     public Item[] Inventory;
 
-    private EPlayerState _state;
     private Vector2 _input;
+    
+    [Header("Player State")]
+    private EPlayerState _state;
     private bool _canSprint = false;
 
     private GameObject _raycastHitObject;
@@ -94,7 +98,7 @@ public class Player : Character
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit, 1000))
         {
-            _raycastHitObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            _raycastHitObject.transform.position = new Vector3(hit.point.x, hit.point.y + RaycastOffset, hit.point.z);
             WeaponPivot.transform.LookAt(_raycastHitObject.transform);
         }
     }
@@ -108,6 +112,7 @@ public class Player : Character
     {
         Controls.Disable();
     }
+
     private enum EPlayerState 
     { 
         Idle,
