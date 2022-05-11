@@ -13,9 +13,6 @@ public class Player : Character
     public float RaycastOffset = 0.5f;
     public IEquipable EquipedWeapon{ get; private set; }
 
-    [Header("Inventory")]
-    public Item[] Inventory;
-
     private Vector2 _input;
     
     [Header("Player State")]
@@ -24,6 +21,7 @@ public class Player : Character
 
     private GameObject _raycastHitObject;
 
+    #region MonoBehaviors
     protected override void Awake()
     {
         base.Awake();
@@ -58,6 +56,24 @@ public class Player : Character
         }
     }
 
+    private void OnEnable()
+    {
+        Controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Controls.Disable();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Item")
+        {
+            other.GetComponent<ItemBehavior>().PickUpItem();
+        }
+    }
+    #endregion
     private void SetPlayerState()
     {
         _input = Controls.ActiveGame.Movement.ReadValue<Vector2>();
@@ -103,15 +119,6 @@ public class Player : Character
         }
     }
 
-    private void OnEnable()
-    {
-        Controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        Controls.Disable();
-    }
 
     private enum EPlayerState 
     { 
