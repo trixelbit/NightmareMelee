@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea46cf604dd39741a466b2f49569b95, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f8f30bf502924044aebb11b2d1fbb12, type: 3}
   m_Name: HealthUp+1
   m_EditorClassIdentifier: 
   InGameSprite: {fileID: 0}

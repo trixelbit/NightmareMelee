@@ -42,10 +42,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7966487060128692789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9cec48b37439f04a8e5c8225ec9eaed, type: 3}
+  m_Script: {fileID: 11500000, guid: 3318a6168bce899409474eb20f55154c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Assets: {fileID: 11400000, guid: 994737cc150b6604cb9568b2f01b1e65, type: 2}
+  Assets: {fileID: 11400000, guid: 7fef75b3fb7a7f74cb48df96ed38d41e, type: 2}
 --- !u!33 &8269288421394364947
 MeshFilter:
   m_ObjectHideFlags: 0

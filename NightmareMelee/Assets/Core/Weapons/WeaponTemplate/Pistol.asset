@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0828762f857162845abfbded7a543532, type: 3}
+  m_Script: {fileID: 11500000, guid: d0aa0dfb69ce7b846a4e3b4460a23e14, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
   WeaponSprite: {fileID: 0}
-  Bullet: {fileID: 6752772861026385256, guid: c85102d7589ac3a4b8848f9cb15eef01, type: 3}
+  Bullet: {fileID: 6752772861026385256, guid: 50df00a5a57c35847a6ee56f18193053, type: 3}
   ShootSFX: {fileID: 0}
   ReloadSFX: {fileID: 0}
   EquipSFX: {fileID: 0}
