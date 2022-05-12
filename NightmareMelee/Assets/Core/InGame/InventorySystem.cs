@@ -2,29 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySystem
+public class InventorySystem : IInventorySystem
 {
-    private CircularItemList ItemList = new CircularItemList();
+    private CircularItemList _itemList = new CircularItemList();
 
     public void SelectItem()
     {
-        ItemList.CurrentItem.ExecuteAffect();
+        _itemList.CurrentItem.ExecuteAffect();
     }
 
     public void NextItem()
     {
-        ItemList.GoToNext();
+        _itemList.GoToNext();
     }
 
     public void PreviousItem() 
     {
-        ItemList.GoToPrevious();
+        _itemList.GoToPrevious();
     }
 
     public void AddItem(Item item) 
     {
-        ItemList.Add(item);
+        _itemList.Add(item);
     }
+
     private class CircularItemList
     { 
         public int Count = 0;
@@ -114,6 +115,17 @@ public class InventorySystem
         }
 
     }
+}
+
+public interface IInventorySystem
+{
+    public void SelectItem();
+    
+    public void NextItem();
+    
+    public void PreviousItem();
+
+    public void AddItem(Item item);
 }
 
 

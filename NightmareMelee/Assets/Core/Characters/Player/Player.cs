@@ -74,6 +74,7 @@ public class Player : Character
         }
     }
     #endregion
+
     private void SetPlayerState()
     {
         _input = Controls.ActiveGame.Movement.ReadValue<Vector2>();
@@ -118,7 +119,6 @@ public class Player : Character
             WeaponPivot.transform.LookAt(_raycastHitObject.transform);
         }
     }
-
 
     private enum EPlayerState 
     { 

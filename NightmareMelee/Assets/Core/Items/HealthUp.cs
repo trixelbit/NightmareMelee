@@ -9,6 +9,6 @@ public class HealthUp : Item
 
     public override void ExecuteAffect()
     {
-        GameManager.Instance.IncreaseHP(IncreaseAmount);
+        GameManager.HealthSystem.IncreaseHealth(IncreaseAmount);
     }
 }
